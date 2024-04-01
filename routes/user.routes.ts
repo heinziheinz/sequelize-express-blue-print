@@ -16,4 +16,18 @@ router.get("/user", async (req: Request, res: Response) => {
         .catch(err => res.send('Error:' + err));
 
 });
+
+router.post("/user", async (req: Request, res: Response) => {
+    User.sync({ alter: true }).then(() => {
+        console.log("Post my User")
+        console.log(req.body);
+        return User.create(req.body);
+    })
+        .then((data) => {
+            console.log('User added to the database Juhee X')
+            console.log(data);
+            res.json(data);
+        })
+        .catch(err => res.send('Error:' + err));
+});
 export default router;
